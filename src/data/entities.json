@@ -1,0 +1,22 @@
+[
+  {
+    "index": 0,
+    "color": "maroon",
+    "label": "car"
+  },
+  {
+    "index": 1,
+    "color": "navy",
+    "label": "plane"
+  },
+  {
+    "index": 2,
+    "color": "darkgreen",
+    "label": "person"
+  },
+  {
+    "index": 3,
+    "color": "black",
+    "label": "testcase"
+  },
+]
