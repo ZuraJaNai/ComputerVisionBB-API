@@ -10,16 +10,16 @@ router.get("/", (req, res) => {
 });
 
 // @route POST api/entities
-// @desc create new entity
+// @desc   new entity
 router.post("/", (req, res) => {
   const entity = {
     index: entities.length,
-    ...req.body,
+    ...req.body
   };
   entities.push(entity);
   let data = JSON.stringify(entities);
   fs.writeFileSync("./src/data/entities.json", data);
-  res.status(201).json(entities);
+  res.status(201).json(entity);
 });
 
 module.exports = router;
