@@ -12,6 +12,7 @@ app.use(
     extended: false
   })
 );
+
 app.use(bodyParser.json());
 //make folder public
 app.use("/img/", express.static("img"));

@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-var entities = require("../data/entities");
+let entities = require("../data/entities");
 
 // @route GET api/entities
 // @desc get list of all entities
 router.get("/", (req, res) => {
-  res.status(200).json(entities);
+  let entitiesJSON = JSON.parse(
+    fs.readFileSync(__dirname + "/../data/entities.json")
+  );
+  res.status(200).json(entitiesJSON);
 });
 
 // @route POST api/entities

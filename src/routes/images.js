@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-let images = require("../data/images");
 const hound = require("hound");
 const watcher = hound.watch("./img/");
-
+let images = require("../data/images");
 const multer = require("multer");
 
 /*modify json on folder change*/
@@ -17,18 +16,18 @@ watcher.on("delete", () => {
 
 const folderOnChange = () => {
   fs.readdir("./img/", (err, items) => {
+    /*sort by date*/
     items = items.sort(
       (a, b) =>
         fs.statSync("./img/" + b).mtime.getTime() -
         fs.statSync("./img/" + a).mtime.getTime()
     );
     let imagesEmpty = [];
+    /*if 0 img -> empty JSON*/
     if (items.length === 0) {
-      console.log("empty");
       let data = JSON.stringify(imagesEmpty);
       fs.writeFileSync("./src/data/images.json", data);
     } else {
-      console.log(items);
       for (let i = 0; i < items.length; i++) {
         let image = {
           _id: imagesEmpty.length,
@@ -67,12 +66,15 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 /*request*/
+
 router.get("/", (req, res) => {
-  res.status(200).json(images);
+  let imagesJSON = JSON.parse(
+    fs.readFileSync(__dirname + "/../data/images.json")
+  );
+  res.status(200).json(imagesJSON);
 });
 
 router.post("/", upload.single("targetImage"), (req, res) => {
-  folderOnChange();
   res.status(201).json(images);
 });
 

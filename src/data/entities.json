@@ -1,1 +1,21 @@
-[{"index":0,"color":"maroon","label":"car"},{"index":1,"color":"navy","label":"plane"},{"index":2,"color":"darkgreen","label":"person"},{"index":3,"color":"black","label":"testcase"},{"index":4,"color":"#2e771e","label":"dog"},{"index":5,"color":"#8f414","label":"Person"},{"index":6,"color":"#f11403","label":"Person"}]
+[{
+  "index": 0,
+  "color": "maroon",
+  "label": "car"
+}, {
+  "index": 1,
+  "color": "navy",
+  "label": "plane"
+}, {
+  "index": 2,
+  "color": "darkgreen",
+  "label": "person"
+}, {
+  "index": 3,
+  "color": "black",
+  "label": "testcase"
+}, {
+  "index": 4,
+  "color": "#2e771e",
+  "label": "dog"
+}]
