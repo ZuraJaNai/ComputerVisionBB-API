@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
+const konva = require("konva");
 let entities = require("../data/entities");
 
 // @route GET api/entities
@@ -17,7 +18,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   for (let i = 0; i < entities.length; i++) {
     if (entities[i].color === req.body.color) {
-      req.body.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      req.body.color = konva.Util.getRandomColor();
     }
   }
   const entity = {

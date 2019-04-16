@@ -18,4 +18,8 @@
   "index": 4,
   "color": "#2e771e",
   "label": "dog"
+}, {
+  "index": 5,
+  "color": "#fd5de5",
+  "label": ""
 }]
