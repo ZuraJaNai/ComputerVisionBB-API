@@ -12,6 +12,11 @@ router.get("/", (req, res) => {
 // @route POST api/entities
 // @desc   new entity
 router.post("/", (req, res) => {
+  for (let i = 0; i < entities.length; i++) {
+    if (entities[i].color === req.body.color) {
+      req.body.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    }
+  }
   const entity = {
     index: entities.length,
     ...req.body

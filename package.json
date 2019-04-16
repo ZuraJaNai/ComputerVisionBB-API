@@ -11,7 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "chokidar": "^2.1.5",
     "express": "^4.16.4",
+    "hound": "^1.0.5",
     "multer": "^1.4.1"
   },
   "devDependencies": {
