@@ -1,20 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-var entities = require("../data/entities");
+const konva = require("konva");
+let entities = require("../data/entities");
 
 // @route GET api/entities
 // @desc get list of all entities
 router.get("/", (req, res) => {
-  res.status(200).json(entities);
+  let entitiesJSON = JSON.parse(
+    fs.readFileSync(__dirname + "/../data/entities.json")
+  );
+  res.status(200).json(entitiesJSON);
 });
 
 // @route POST api/entities
-// @desc create new entity
+// @desc   new entity
 router.post("/", (req, res) => {
+  for (let i = 0; i < entities.length; i++) {
+    if (entities[i].color === req.body.color) {
+      req.body.color = konva.Util.getRandomColor();
+    }
+  }
   const entity = {
     index: entities.length,
-    ...req.body,
+    ...req.body
   };
   entities.push(entity);
   let data = JSON.stringify(entities);
