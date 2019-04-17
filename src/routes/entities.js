@@ -31,4 +31,27 @@ router.post("/", (req, res) => {
   res.status(201).json(entity);
 });
 
+router.delete("/:index", (req, res) => {
+  let data;
+  let newEntitesJSON = [];
+  let entitiesJSON = JSON.parse(
+    fs.readFileSync(__dirname + "/../data/entities.json")
+  );
+  for (let i = 0; i < entitiesJSON.length; i++) {
+    if (entitiesJSON[i].index == req.params.index) {
+      continue;
+    } else {
+      let newEntity = {
+        index: newEntitesJSON.length,
+        color: entitiesJSON[i].color,
+        label: entitiesJSON[i].label
+      };
+      newEntitesJSON.push(newEntity);
+    }
+  }
+  data = JSON.stringify(newEntitesJSON);
+  fs.writeFileSync("./src/data/entities.json", data);
+  res.status(200).json(data);
+});
+
 module.exports = router;

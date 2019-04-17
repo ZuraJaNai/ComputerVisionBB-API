@@ -1,17 +1,1 @@
-[{
-  "index": 0,
-  "color": "maroon",
-  "label": "car"
-}, {
-  "index": 1,
-  "color": "navy",
-  "label": "plane"
-}, {
-  "index": 2,
-  "color": "darkgreen",
-  "label": "person"
-}, {
-  "index": 3,
-  "color": "black",
-  "label": "testcase"
-}]
+[{"index":0,"color":"#0ba5d4","label":"cat"},{"index":1,"color":"#0a55c4","label":"dog"},{"index":2,"color":"#11d33c","label":"sign"},{"index":3,"color":"#182fd7","label":"tree"}]
