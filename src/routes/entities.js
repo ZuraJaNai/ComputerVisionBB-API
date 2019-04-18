@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const konva = require("konva");
-let entities = require("../data/entities");
+// let entities = require("../data/entities");
 
 // @route GET api/entities
 // @desc get list of all entities
@@ -16,17 +16,20 @@ router.get("/", (req, res) => {
 // @route POST api/entities
 // @desc   new entity
 router.post("/", (req, res) => {
-  for (let i = 0; i < entities.length; i++) {
-    if (entities[i].color === req.body.color) {
+  let entitiesJSON = JSON.parse(
+    fs.readFileSync(__dirname + "/../data/entities.json")
+  );
+  for (let i = 0; i < entitiesJSON.length; i++) {
+    if (entitiesJSON[i].color === req.body.color) {
       req.body.color = konva.Util.getRandomColor();
     }
   }
   const entity = {
-    index: entities.length,
+    index: entitiesJSON.length,
     ...req.body
   };
-  entities.push(entity);
-  let data = JSON.stringify(entities);
+  entitiesJSON.push(entity);
+  let data = JSON.stringify(entitiesJSON);
   fs.writeFileSync("./src/data/entities.json", data);
   res.status(201).json(entity);
 });
