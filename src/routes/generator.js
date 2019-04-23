@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-var builder = require("xmlbuilder");
+const builder = require("xmlbuilder");
+const archiver = require("archiver");
 const fs = require("fs");
 
 router.get("/", (req, res) => {
@@ -39,8 +40,22 @@ router.get("/", (req, res) => {
     fs.writeFileSync(`./output/${image.name}.xml`, data);
   });
   //create archive and send it
+  //add pictures which are labeled to archive ???
+  res.setHeader("Content-Type", "application/zip");
+  pipeZipToRes(req, res);
   //delete xml files
-  res.status(200).send();
 });
+
+function pipeZipToRes(req, res) {
+  const zipfile = archiver("zip");
+
+  zipfile.on("error", err => {
+    throw err;
+  });
+
+  zipfile.pipe(res);
+
+  zipfile.directory("./output", false).finalize();
+}
 
 module.exports = router;
