@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const konva = require('konva');
-// let entities = require("../data/entities");
 
 // @route GET api/entities
 // @desc get list of all entities
@@ -19,11 +17,6 @@ router.post('/', (req, res) => {
   let entitiesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/entities.json'),
   );
-  for (let i = 0; i < entitiesJSON.length; i++) {
-    if (entitiesJSON[i].color === req.body.color) {
-      req.body.color = konva.Util.getRandomColor();
-    }
-  }
   const entity = {
     index: entitiesJSON.length,
     ...req.body,
@@ -34,6 +27,8 @@ router.post('/', (req, res) => {
   res.status(201).json(entity);
 });
 
+// @route DELETE api/entities
+// @desc   delete entity
 router.delete('/:index', (req, res) => {
   let data;
   let newEntitesJSON = [];
@@ -57,6 +52,8 @@ router.delete('/:index', (req, res) => {
   res.status(200).json(data);
 });
 
+// @route PUT api/entities
+// @desc   change entity
 router.put('/', (req, res) => {
   let entitiesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/entities.json'),

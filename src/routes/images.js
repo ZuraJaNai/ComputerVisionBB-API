@@ -6,24 +6,24 @@ const watcher = hound.watch('./img/');
 let images = require('../data/images');
 const multer = require('multer');
 
-/*modify json on folder change*/
+// Folder 'on change' listeners.
 watcher.on('create', () => {
   folderOnChange();
 });
 watcher.on('delete', () => {
   folderOnChange();
 });
-
+// Do some actions if folder change.
 const folderOnChange = () => {
   fs.readdir('./img/', (err, items) => {
-    /*sort by date*/
+    // sort by date
     items = items.sort(
       (a, b) =>
         fs.statSync('./img/' + b).mtime.getTime() -
         fs.statSync('./img/' + a).mtime.getTime(),
     );
     let imagesEmpty = [];
-    /*if 0 img -> empty JSON*/
+    // if 0 img -> empty JSON
     if (items.length === 0) {
       let data = JSON.stringify(imagesEmpty);
       fs.writeFileSync('./src/data/images.json', data);
@@ -42,7 +42,7 @@ const folderOnChange = () => {
   });
 };
 
-/*store data in this folder*/
+// Choose file for data storage.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './img/');
@@ -51,7 +51,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '.' + file.originalname);
   },
 });
-// filter by file type
+// Addition file filter by file type.
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === 'image/jpeg' ||
@@ -65,8 +65,8 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-/*request*/
-
+// @route GET api/images
+// @desc   get list of all images
 router.get('/', (req, res) => {
   let imagesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/images.json'),
@@ -74,10 +74,14 @@ router.get('/', (req, res) => {
   res.status(200).json(imagesJSON);
 });
 
+// @route POST api/images
+// @desc   new image
 router.post('/', upload.single('targetImage'), (req, res) => {
   res.status(201).json(images);
 });
 
+// @route DELETE api/images
+// @desc   delete image
 router.delete('/:img', (req, res) => {
   let path = req.params.img;
   fs.unlinkSync('./img/' + path);
