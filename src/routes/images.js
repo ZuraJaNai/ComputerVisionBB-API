@@ -66,8 +66,10 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 /*request*/
-
+let getCount = 0;
 router.get('/', (req, res) => {
+  console.log('images get: ' + getCount);
+  getCount++;
   let imagesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/images.json'),
   );

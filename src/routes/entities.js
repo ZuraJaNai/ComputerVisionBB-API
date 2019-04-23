@@ -6,7 +6,10 @@ const konva = require('konva');
 
 // @route GET api/entities
 // @desc get list of all entities
+let getCount = 0;
 router.get('/', (req, res) => {
+  console.log('ent get: ' + getCount);
+  getCount++;
   let entitiesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/entities.json'),
   );
