@@ -84,8 +84,12 @@ router.post('/', upload.single('targetImage'), (req, res) => {
 // @desc   delete image
 router.delete('/:img', (req, res) => {
   let path = req.params.img;
-  fs.unlinkSync('./img/' + path);
-  res.status(201);
+  if (fs.existsSync('./img/' + path)) {
+    fs.unlinkSync('./img/' + path);
+    res.status(200);
+  } else {
+    console.log('no file');
+  }
 });
 
 module.exports = router;
