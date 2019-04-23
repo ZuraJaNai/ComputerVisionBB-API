@@ -10,8 +10,8 @@ router.get("/", (req, res) => {
   const labeledImages = JSON.parse(
     fs.readFileSync("./src/data/labeledImages.json")
   );
-  labeledImages.forEach(element => {
-    createXML(element.image, element.shapes, directory);
+  labeledImages.forEach(obj => {
+    createXML(obj.image, obj.shapes, directory);
   });
   res.setHeader("Content-Type", "application/zip");
   pipeZipToRes(req, res, directory);
