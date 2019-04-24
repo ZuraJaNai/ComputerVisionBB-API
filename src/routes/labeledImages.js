@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
   const images = JSON.parse(fs.readFileSync("./src/data/labeledImages.json"));
   data = JSON.stringify(addOrReplaceImage(images, labeledImage));
   fs.writeFileSync("./src/data/labeledImages.json", data);
-  res.status(201);
+  res.status(201).send();
 });
 
 function addOrReplaceImage(images, labeledImage) {
