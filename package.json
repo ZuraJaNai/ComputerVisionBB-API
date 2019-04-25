@@ -7,6 +7,12 @@
     "start": "node server.js",
     "server": "nodemon  --inspect server.js"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "img/*",
+      "src/data/*"
+    ]
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
