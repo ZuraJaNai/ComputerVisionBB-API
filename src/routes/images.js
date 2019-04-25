@@ -5,7 +5,6 @@ const hound = require('hound');
 const watcher = hound.watch('./img/');
 let images = require('../data/images');
 const multer = require('multer');
-
 // Folder 'on change' listeners.
 watcher.on('create', () => {
   folderOnChange();
@@ -71,13 +70,19 @@ router.get('/', (req, res) => {
   let imagesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/images.json'),
   );
-  res.status(200).json(imagesJSON);
+  res
+    .status(200)
+    .json(imagesJSON)
+    .end();
 });
 
 // @route POST api/images
 // @desc   new image
 router.post('/', upload.single('targetImage'), (req, res) => {
-  res.status(201).json(images);
+  res
+    .status(201)
+    .json(images)
+    .end();
 });
 
 // @route DELETE api/images
@@ -86,7 +91,7 @@ router.delete('/:img', (req, res) => {
   let path = req.params.img;
   if (fs.existsSync('./img/' + path)) {
     fs.unlinkSync('./img/' + path);
-    res.status(200);
+    res.status(200).end();
   } else {
     console.log('no file');
   }
