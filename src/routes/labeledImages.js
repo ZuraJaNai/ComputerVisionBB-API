@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
 });
 
 function addOrReplaceImage(images, labeledImage) {
-  name = labeledImage.image.name;
+  let name = labeledImage.image.name;
   const index = images.findIndex(obj => obj.image.name === name);
   index >= 0 ? (images[index] = labeledImage) : images.push(labeledImage);
   return images;
