@@ -65,6 +65,15 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
+const deleteImageShapes = name => {
+  const images = JSON.parse(fs.readFileSync("./src/data/labeledImages.json"));
+  const index = images.findIndex(obj => obj.image.name === name);
+  if (index >= 0) {
+    images.splice(index, 1);
+    fs.writeFileSync("./src/data/labeledImages.json", JSON.stringify(images));
+  }
+};
+
 // @route GET api/images
 // @desc   get list of all images
 router.get('/', (req, res) => {
@@ -90,8 +99,9 @@ router.post('/', upload.single('targetImage'), (req, res) => {
 // @desc   delete image
 router.delete('/img/:imgName', (req, res) => {
   let path = req.params.imgName;
-  if (fs.existsSync('./img/' + path)) {
-    fs.unlinkSync('./img/' + path);
+
+  if (fs.existsSync("./img/" + path)) {
+    deleteImageShapes(path);
     res
       .status(200)
       .send()
