@@ -8,7 +8,10 @@ router.get('/', (req, res) => {
   let entitiesJSON = JSON.parse(
     fs.readFileSync(__dirname + '/../data/entities.json'),
   );
-  res.status(200).json(entitiesJSON);
+  res
+    .status(200)
+    .json(entitiesJSON)
+    .end();
 });
 
 // @route POST api/entities
@@ -24,7 +27,10 @@ router.post('/', (req, res) => {
   entitiesJSON.push(entity);
   let data = JSON.stringify(entitiesJSON);
   fs.writeFileSync('./src/data/entities.json', data);
-  res.status(201).json(entity);
+  res
+    .status(201)
+    .json(entity)
+    .end();
 });
 
 // @route DELETE api/entities
@@ -49,7 +55,10 @@ router.delete('/:index', (req, res) => {
   }
   data = JSON.stringify(newEntitesJSON);
   fs.writeFileSync('./src/data/entities.json', data);
-  res.status(200).json(data);
+  res
+    .status(200)
+    .json(data)
+    .end();
 });
 
 // @route PUT api/entities
@@ -61,7 +70,10 @@ router.put('/', (req, res) => {
   entitiesJSON[req.body.index].label = req.body.data;
   let data = JSON.stringify(entitiesJSON);
   fs.writeFileSync('./src/data/entities.json', data);
-  res.status(200).json(data);
+  res
+    .status(200)
+    .json(data)
+    .end();
 });
 
 module.exports = router;

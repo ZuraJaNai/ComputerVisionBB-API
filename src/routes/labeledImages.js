@@ -1,25 +1,28 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const fs = require("fs");
+const fs = require('fs');
 
 // @route GET api/labeled
 // @desc  get labels of image
 router.get("/:imageName", (req, res) => {
   name = req.params.imageName;
-  let images = JSON.parse(fs.readFileSync("./src/data/labeledImages.json"));
+  let images = JSON.parse(fs.readFileSync('./src/data/labeledImages.json'));
   let labeledImage = images.find(obj => {
     return obj.image.name === name;
   });
-  res.status(200).json(labeledImage);
+  res
+    .status(200)
+    .json(labeledImage)
+    .end();
 });
 
 // @route POST api/labeled
 // @desc  add labels to image
 router.post("/", (req, res) => {
   labeledImage = req.body;
-  const images = JSON.parse(fs.readFileSync("./src/data/labeledImages.json"));
+  const images = JSON.parse(fs.readFileSync('./src/data/labeledImages.json'));
   data = JSON.stringify(addOrReplaceImage(images, labeledImage));
-  fs.writeFileSync("./src/data/labeledImages.json", data);
+  fs.writeFileSync('./src/data/labeledImages.json', data);
   res.status(201).send();
 });
 
