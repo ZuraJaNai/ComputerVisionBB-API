@@ -18,6 +18,8 @@ app.use(
 app.use(bodyParser.json());
 //make folder public
 app.use('/img/', express.static('img'));
+app.use('/public/', express.static('public'));
+
 //Routes
 app.use('/api/entities', entities);
 app.use('/api/images/', images);

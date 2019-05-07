@@ -10,7 +10,8 @@
   "nodemonConfig": {
     "ignore": [
       "img/*",
-      "src/data/*"
+      "src/data/*",
+      "public/*"
     ]
   },
   "author": "",
