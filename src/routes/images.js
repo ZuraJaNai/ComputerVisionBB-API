@@ -82,23 +82,25 @@ const downloadGDriveImages = (folderId, accessToken) => {
   };
   const baseUrl = "https://www.googleapis.com/drive/v3/files";
   const url = `${baseUrl}?q=parents%20in%20'${folderId}'`;
-  axios.get(url, { headers }).then(res => {
+  return axios.get(url, { headers }).then(res => {
     const files = res.data.files;
     files.forEach(file => {
       console.log(file);
-      // add of mimeType file -> download, else (mimeType folder) -> step into folder (recursion)
-      // add alt media to params
-      const imgPath = path.resolve("img", file.name);
-      const writer = fs.createWriteStream(imgPath);
-      axios
-        .get(`${baseUrl}/${file.id}`, {
-          headers,
-          params: { alt: "media" },
-          responseType: "stream",
-        })
-        .then(res => {
-          res.data.pipe(writer);
-        });
+      if (file.mimeType === "application/vnd.google-apps.folder") {
+        downloadGDriveImages(file.id, accessToken);
+      } else {
+        const imgPath = path.resolve("img", file.name);
+        const writer = fs.createWriteStream(imgPath);
+        axios
+          .get(`${baseUrl}/${file.id}`, {
+            headers,
+            params: { alt: "media" },
+            responseType: "stream",
+          })
+          .then(res => {
+            res.data.pipe(writer);
+          });
+      }
     });
   });
 };
@@ -134,10 +136,11 @@ router.post("/gdrive", (req, res) => {
   const { url, accessToken } = req.body;
   const folderId = getFolderId(url);
   downloadGDriveImages(folderId, accessToken);
+  //need to wait until the end of downloading
   res
     .status(201)
     .json(images)
-    .end();
+    .send();
 });
 
 // @route DELETE api/images
