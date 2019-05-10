@@ -76,7 +76,7 @@ const deleteImageShapes = name => {
   }
 };
 
-const downloadGDriveImages = (folderId, accessToken) => {
+const downloadGDriveImages = async (folderId, accessToken) => {
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -84,14 +84,14 @@ const downloadGDriveImages = (folderId, accessToken) => {
   const url = `${baseUrl}?q=parents%20in%20'${folderId}'`;
   return axios.get(url, { headers }).then(res => {
     const files = res.data.files;
-    files.forEach(file => {
+    let requests = files.map(file => {
       console.log(file);
       if (file.mimeType === "application/vnd.google-apps.folder") {
-        downloadGDriveImages(file.id, accessToken);
+        //return downloadGDriveImages(file.id, accessToken);
       } else {
         const imgPath = path.resolve("img", file.name);
         const writer = fs.createWriteStream(imgPath);
-        axios
+        return axios
           .get(`${baseUrl}/${file.id}`, {
             headers,
             params: { alt: "media" },
@@ -99,9 +99,17 @@ const downloadGDriveImages = (folderId, accessToken) => {
           })
           .then(res => {
             res.data.pipe(writer);
+            return Promise.resolve();
           });
       }
     });
+    Promise.all(requests)
+      .then(() => {
+        return Promise.resolve();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   });
 };
 
@@ -135,12 +143,13 @@ router.post("/", upload.single("targetImage"), (req, res) => {
 router.post("/gdrive", (req, res) => {
   const { url, accessToken } = req.body;
   const folderId = getFolderId(url);
-  downloadGDriveImages(folderId, accessToken);
-  //need to wait until the end of downloading
-  res
-    .status(201)
-    .json(images)
-    .send();
+  downloadGDriveImages(folderId, accessToken).then(result => {
+    console.log(result);
+    res
+      .status(201)
+      .json(images)
+      .send();
+  });
 });
 
 // @route DELETE api/images
