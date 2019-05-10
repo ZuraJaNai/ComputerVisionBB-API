@@ -104,7 +104,7 @@ const downloadFile = (file, baseUrl, headers) => {
         console.log(error);
       });
   } else {
-    const imgPath = path.resolve("img", file.name);
+    const imgPath = path.resolve("img", Date.now() + "." + file.name);
     const writer = fs.createWriteStream(imgPath);
     return axios
       .get(`${baseUrl}/${file.id}`, {
