@@ -78,7 +78,9 @@ const deleteImageShapes = name => {
 
 const getBaseFolder = (url, baseUrl, headers) => {
   // parse url and get folderId
-  const folderId = "1AxlHhLpQn7fT4SF-Ib-9KELgdoS8P94G";
+  const from = url.lastIndexOf("/") + 1;
+  const to = url.indexOf("?usp=sharing");
+  const folderId = url.substring(from, to);
   return axios
     .get(`${baseUrl}/${folderId}`, {
       headers,
@@ -88,7 +90,7 @@ const getBaseFolder = (url, baseUrl, headers) => {
     });
 };
 
-const downloadImage = (file, baseUrl, headers) => {
+const downloadFile = (file, baseUrl, headers) => {
   if (file.mimeType === "application/vnd.google-apps.folder") {
     return axios
       .get(`${baseUrl}?q=parents%20in%20'${file.id}'`, {
@@ -96,7 +98,7 @@ const downloadImage = (file, baseUrl, headers) => {
         //params: { q: `parents%20in%20'${file.id}'` },
       })
       .then(result => {
-        return downloadGDriveImages(result.data.files, baseUrl, headers);
+        return downloadFromFolder(result.data.files, baseUrl, headers);
       })
       .catch(error => {
         console.log(error);
@@ -120,13 +122,12 @@ const downloadImage = (file, baseUrl, headers) => {
   }
 };
 
-const downloadGDriveImages = async (files, baseUrl, headers) => {
+const downloadFromFolder = async (files, baseUrl, headers) => {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    console.log(file);
-    await downloadImage(file, baseUrl, headers);
+    await downloadFile(file, baseUrl, headers);
   }
-  return "ready";
+  return;
 };
 
 // @route GET api/images
@@ -159,12 +160,8 @@ router.post("/gdrive", async (req, res) => {
   };
   const baseUrl = "https://www.googleapis.com/drive/v3/files";
   const folder = await getBaseFolder(url, baseUrl, headers);
-  await downloadGDriveImages(new Array(folder), baseUrl, headers);
-  console.log("ready");
-  res
-    .status(201)
-    .json(images)
-    .send();
+  await downloadFromFolder(new Array(folder), baseUrl, headers);
+  res.status(201).send();
 });
 
 // @route DELETE api/images
