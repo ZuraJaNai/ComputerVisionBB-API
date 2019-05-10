@@ -76,47 +76,59 @@ const deleteImageShapes = name => {
   }
 };
 
-const downloadGDriveImages = async (folderId, accessToken) => {
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
-  const baseUrl = "https://www.googleapis.com/drive/v3/files";
-  const url = `${baseUrl}?q=parents%20in%20'${folderId}'`;
-  return axios.get(url, { headers }).then(res => {
-    const files = res.data.files;
-    let requests = files.map(file => {
-      console.log(file);
-      if (file.mimeType === "application/vnd.google-apps.folder") {
-        //return downloadGDriveImages(file.id, accessToken);
-      } else {
-        const imgPath = path.resolve("img", file.name);
-        const writer = fs.createWriteStream(imgPath);
-        return axios
-          .get(`${baseUrl}/${file.id}`, {
-            headers,
-            params: { alt: "media" },
-            responseType: "stream",
-          })
-          .then(res => {
-            res.data.pipe(writer);
-            return Promise.resolve();
-          });
-      }
+const getBaseFolder = (url, baseUrl, headers) => {
+  // parse url and get folderId
+  const folderId = "1AxlHhLpQn7fT4SF-Ib-9KELgdoS8P94G";
+  return axios
+    .get(`${baseUrl}/${folderId}`, {
+      headers,
+    })
+    .then(result => {
+      return result.data;
     });
-    Promise.all(requests)
-      .then(() => {
+};
+
+const downloadImage = (file, baseUrl, headers) => {
+  if (file.mimeType === "application/vnd.google-apps.folder") {
+    return axios
+      .get(`${baseUrl}?q=parents%20in%20'${file.id}'`, {
+        headers,
+        //params: { q: `parents%20in%20'${file.id}'` },
+      })
+      .then(result => {
+        return downloadGDriveImages(result.data.files, baseUrl, headers);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  } else {
+    const imgPath = path.resolve("img", file.name);
+    const writer = fs.createWriteStream(imgPath);
+    return axios
+      .get(`${baseUrl}/${file.id}`, {
+        headers,
+        params: { alt: "media" },
+        responseType: "stream",
+      })
+      .then(res => {
+        res.data.pipe(writer);
         return Promise.resolve();
       })
       .catch(error => {
         console.log(error);
       });
-  });
+  }
 };
 
-const getFolderId = url => {
-  // get folder id from url
-  return "1IWD3_xbGQv23892IJ0mzIoCQwjCaz9V3";
+const downloadGDriveImages = async (files, baseUrl, headers) => {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    console.log(file);
+    await downloadImage(file, baseUrl, headers);
+  }
+  return "ready";
 };
+
 // @route GET api/images
 // @desc   get list of all images
 router.get("/", (req, res) => {
@@ -140,16 +152,19 @@ router.post("/", upload.single("targetImage"), (req, res) => {
 
 // @route POST api/images
 // @desc   new images from google drive
-router.post("/gdrive", (req, res) => {
+router.post("/gdrive", async (req, res) => {
   const { url, accessToken } = req.body;
-  const folderId = getFolderId(url);
-  downloadGDriveImages(folderId, accessToken).then(result => {
-    console.log(result);
-    res
-      .status(201)
-      .json(images)
-      .send();
-  });
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+  const baseUrl = "https://www.googleapis.com/drive/v3/files";
+  const folder = await getBaseFolder(url, baseUrl, headers);
+  await downloadGDriveImages(new Array(folder), baseUrl, headers);
+  console.log("ready");
+  res
+    .status(201)
+    .json(images)
+    .send();
 });
 
 // @route DELETE api/images
