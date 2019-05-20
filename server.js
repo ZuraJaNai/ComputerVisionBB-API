@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var entities = require('./src/routes/entities');
-var images = require('./src/routes/images');
-var generator = require('./src/routes/generator');
-var labeledImages = require('./src/routes/labeledImages');
+const entities = require('./src/routes/entities');
+const images = require('./src/routes/images');
+const generator = require('./src/routes/generator');
+const labeledImages = require('./src/routes/labeledImages');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,11 +16,11 @@ app.use(
 );
 
 app.use(bodyParser.json());
-//make folder public
+// make folder public
 app.use('/img/', express.static('img'));
 app.use('/public/', express.static('public'));
 
-//Routes
+// Routes
 app.use('/api/entities', entities);
 app.use('/api/images/', images);
 app.use('/api/labeled/', labeledImages);
