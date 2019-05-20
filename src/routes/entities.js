@@ -7,7 +7,7 @@ const fs = require('fs');
 // @desc get list of all entities
 router.get('/', (req, res) => {
   const entitiesJSON = JSON.parse(
-    fs.readFileSync(`${__dirname  }/../data/entities.json`),
+    fs.readFileSync(`${__dirname}/../data/entities.json`),
   );
   res
     .status(200)
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // @desc   new entity
 router.post('/', (req, res) => {
   const entitiesJSON = JSON.parse(
-    fs.readFileSync(`${__dirname  }/../data/entities.json`),
+    fs.readFileSync(`${__dirname}/../data/entities.json`),
   );
   const entity = {
     index: entitiesJSON.length,
@@ -37,13 +37,12 @@ router.post('/', (req, res) => {
 // @route DELETE api/entities
 // @desc   delete entity
 router.delete('/:index', (req, res) => {
-  const data;
   const newEntitesJSON = [];
   const entitiesJSON = JSON.parse(
-    fs.readFileSync(`${__dirname  }/../data/entities.json`),
+    fs.readFileSync(`${__dirname}/../data/entities.json`),
   );
   for (let i = 0; i < entitiesJSON.length; i++) {
-    if (entitiesJSON[i].index == req.params.index) {
+    if (entitiesJSON[i].index === req.params.index) {
       continue;
     } else {
       const newEntity = {
@@ -54,7 +53,7 @@ router.delete('/:index', (req, res) => {
       newEntitesJSON.push(newEntity);
     }
   }
-  data = JSON.stringify(newEntitesJSON);
+  const data = JSON.stringify(newEntitesJSON);
   fs.writeFileSync('./src/data/entities.json', data);
   res
     .status(200)
@@ -66,7 +65,7 @@ router.delete('/:index', (req, res) => {
 // @desc   change entity
 router.put('/', (req, res) => {
   const entitiesJSON = JSON.parse(
-    fs.readFileSync(`${__dirname  }/../data/entities.json`),
+    fs.readFileSync(`${__dirname}/../data/entities.json`),
   );
   entitiesJSON[req.body.index].label = req.body.data;
   const data = JSON.stringify(entitiesJSON);
