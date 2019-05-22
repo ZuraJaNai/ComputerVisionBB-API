@@ -6,7 +6,7 @@ const generator = require("./src/routes/generator");
 const labeledImages = require("./src/routes/labeledImages");
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 
 // Bodyparser middleware
 app.use(
