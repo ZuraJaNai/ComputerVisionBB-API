@@ -15,4 +15,5 @@ deploy:
     secure: ZSRvNPte9VbXZcuXUVHzZiFMOoqnQH59tE8JpBlSlEwMGXOPQxZ7g94f+1izgvHYsS9I6hg5epcyB6kQNekSLtRd7iALrDnY3XZh1QHBJgWKgF7njX+bEXnyWYu/WFyQOjNshT/gJXOsayWuM9cW8oN0WFONUGfP9W4sl82mQ3TgAyrkyy2BnzdyMaY2XIbA5QpKSp1Q0s1puMo4MZCA87iXOcwG69hgtCnNff+DE/hsvgH40FutUdebEb/s6vM6120vWv90wsiW4Wqg832UvCbO/vlc7Encym4mbPlp/FxZFNwORIFHRaoAHB2R3dngKWidcfktScy+R8iHAirfBReGkVTr8d+mRbUIh32yiw/jhFzZY1cmFRZDRiwbkySoNlwhN61/3iWJzeT2lQgWpxpG7HWbLnAWJIv0jDm/LudePapD8/cWKXqqC0+fQdn1qlI0AYBlYNH0dXFvyHh/NIP3tPRxOzuRpV6h6tCbktyKfO2r3bGljPVPNJFzAiRTi7gxtqbsju9uvOsnj+PxO3ks3pwUnZ+trVkhTkvAOazC46xW87mLTDNo8t6m0zOq+uxfFNqRKRjnn5CDLOeVjCNtbwEPgbtqK0CRzAz9V8DE21i+5Xdf0vvJV7XG3AU7i+M45DfseQrXKfx/XVf+PfY/WJTrT6ZKeFeFXP5Bt20=
   app: boundingboxes-api
   on:
-    repo: zurajanai/ComputerVisionBB-API
+    branch: prod
+    repo: ZuraJaNai/ComputerVisionBB-API
