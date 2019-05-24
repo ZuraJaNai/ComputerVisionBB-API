@@ -1,18 +1,18 @@
 sudo: false
 language: node_js
 node_js:
-  - 8
+- 8
 cache:
   directories:
-    - node_modules
+  - node_modules
 install:
-  - npm install
+- npm install
 script:
-  - echo "skipping tests"
+- echo "skipping tests"
 deploy:
   provider: heroku
   api-key:
-    secure: K+k5IzztR4lZr3uElFn15A4wj3mrbpHianEXQ7n53685J9KtY1zhJWxeZUVpjfc/k8ib//BZsUF1AnchDSuar69f6AkAw88x6gNswB1dW10Y5tyNGJzE2r/cIAxvIJZl7qQxlVVUvaoTNRBN/qqif6ic/Cng6U5GXti9x1hL4AHxdHSXNjKFkHen+LkTdO30Yh6YM2tbPtk06sF4/Q7LPLkTPN3ycSBfzLolm8RJO7sK7Zy9dpl7IJq7yi3KrPPYiKRsi9NHagYJJiP2o/CdZmxNH1c6v/HfnPrB7q/zXYHm3YUIRXFRjVk1JivcWb9Q/aeOM+k+U5/hJvcx4hJSDng33XfwDoiGK3tyYmaKkC8Clpitzw/CFlF24MiXQf2pMLBYMdrctOHkUAV61CyK89U4TZAq2LLQntqO70kgTD6Q2rWt2N7lOF7QTv9gJDnkngYzzpm6nlXmICB07G7H695152utb5CQXO0hpeFrjFPyBiCXOoxG4DX4TucNBUejXEgRoetwMIuSmKTldUcEd6QzJk7MXfL3YkQZhLbwJS8ZTpuQlea5SxZ1vT/YfMc0blojwFimGH2yRUVF+MOUvfIxmvNqZ7CZbAMCas3WeZhdYi3NjbftzIIRanXFXsrQnqfgJU8ujrSyKBSB5rCAkFu2UkJqqCdyrbAwui+f76s=
+    secure: Rm4TG9Titwb+F/PZTy0ZMViYf8rgEA7h0rQ0RvHPiU2jqDUu2ZXXBhqISh7ca/Voq5AIiU1dPJDEp0b8dL3EbhMuQdngeQ3kAv/43AUstXcmxpGOkCV6skJbuexa51kUuDRRFYcB+ERD+S6xKJwwb8GGOjYxJOeYbzWpqLAD6YiOmesntFAHBPvD+jIvtjKX6NELkdYUkm5lzBan3phr9VtWoah420g0L531IYeqw/P10VpiNZoOv+F62rcg0oVjekYmg7bu3E2rfh2dgcRJIen+77rR5NhQbs18ZKtrS6hgumM5QgWOmsQ9pSmukeVBH4H14TII7eU8Zni9asgMkEeTJLl02j56FE1ospJwIPMFf8MyKQqQmpE0SllbR4bT4A1cX+tUXcmQyrZNw1HP3E5d+kOYjobVoagzL56xD0yO8al/jCszl7ICsgNM6jfOHcPtqQQQ/iFou7pxELTnPEbPCyo/FI/g+KFhaJU6eVtBwvr/9j45nnOWNPaxfsw1UH5Vl5BUJH2G4b40+Yj4gKN9qnAK+xC1S16U9yaflmDN1yt/jM9vg2RPBdMmAz1O5a+Z82ZxvHolOdcnWLGI8N49bYBKBCTe/x4J2/6Cqq5tneaSEAYQLxmO9HWK9lpr5+c3ELM8iMQu5ugTjE50fHhgy15HckW/kStWJ40tS1U=
   on:
     branch: prod
     repo: ZuraJaNai/ComputerVisionBB-API
