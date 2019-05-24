@@ -4,7 +4,7 @@ node_js:
   - 8
 cache:
   directories:
-    - "node_modules"
+    - node_modules
 install:
   - npm install
 script:
@@ -12,8 +12,7 @@ script:
 deploy:
   provider: heroku
   api-key:
-    secure: j3hFgIWlI8DZv68I2pKLx3g8JPfLjuVEkNAipwhL1/6bllJZocukcjN7C/zM7+gRllZLFwxwtYlGugYpsK0EsEfh0Bfs0J8NKwiopHaj05FWr1cFQHZDyqjJu2F31p6RexPEN1B0mzD8PZ9/wAKFzqNmLN7tkgVSMWN4eV1y+DkSiwY/ahLj2o+O74n2fnPObjNJq+lJY6MV1SNT/CoMqeD3iohD75eldEG81T5yjmHi/125bHDtEivV8m9fylhOLVad72GbEJM6URbMXjNXdqdGnyzqVLB0bAtdFuAQ7hnYdh9WptawCAOsBk5dyqCfMbc9JQPs5dH+xHUfzU8mu22jMMQs8HR95lLmrlf0fAmMtWLnGbrMMzRJXtc3RDAbQCzgEJhT1Lfu4b6VzP5jruvo4LmF7TUQTPjgfHBeEFi0kiRbj4zSEvKim+yzg2NlcpR2ipsyIxt4T4ArQUfOQf6yYgm45eMUto7+537++Zd/xDmC0aowYWIzWXi+qdVyJPi0K4aICz4EX0zcVRp4XKRVrZaY2fbjPBtojtECpxP97HIZIn6qEqktUksCiBMO1THfWzWfHsnbGP36/IYmKwEVY8hh7LGbBXcbvCOqCaIYuUtmEaUjStC4YP56Aviat1M2faLjbTQFt2vdAQGFg10eC9dHnzfyHZ+vrhtcRfk=
-    app: boundingboxes-api
+    secure: K+k5IzztR4lZr3uElFn15A4wj3mrbpHianEXQ7n53685J9KtY1zhJWxeZUVpjfc/k8ib//BZsUF1AnchDSuar69f6AkAw88x6gNswB1dW10Y5tyNGJzE2r/cIAxvIJZl7qQxlVVUvaoTNRBN/qqif6ic/Cng6U5GXti9x1hL4AHxdHSXNjKFkHen+LkTdO30Yh6YM2tbPtk06sF4/Q7LPLkTPN3ycSBfzLolm8RJO7sK7Zy9dpl7IJq7yi3KrPPYiKRsi9NHagYJJiP2o/CdZmxNH1c6v/HfnPrB7q/zXYHm3YUIRXFRjVk1JivcWb9Q/aeOM+k+U5/hJvcx4hJSDng33XfwDoiGK3tyYmaKkC8Clpitzw/CFlF24MiXQf2pMLBYMdrctOHkUAV61CyK89U4TZAq2LLQntqO70kgTD6Q2rWt2N7lOF7QTv9gJDnkngYzzpm6nlXmICB07G7H695152utb5CQXO0hpeFrjFPyBiCXOoxG4DX4TucNBUejXEgRoetwMIuSmKTldUcEd6QzJk7MXfL3YkQZhLbwJS8ZTpuQlea5SxZ1vT/YfMc0blojwFimGH2yRUVF+MOUvfIxmvNqZ7CZbAMCas3WeZhdYi3NjbftzIIRanXFXsrQnqfgJU8ujrSyKBSB5rCAkFu2UkJqqCdyrbAwui+f76s=
   on:
     branch: prod
     repo: ZuraJaNai/ComputerVisionBB-API
