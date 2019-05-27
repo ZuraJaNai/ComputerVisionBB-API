@@ -75,7 +75,9 @@ router.get('/', (req, res) => {
     fs.readFileSync('./src/data/labeledImages.json'),
   );
   labeledImages.forEach((obj) => {
-    createXML(obj.image, obj.shapes, directory);
+    if(obj.shapes.length > 0){
+      createXML(obj.image, obj.shapes, directory);
+    }
   });
   res.setHeader('Content-Type', 'application/zip');
   pipeZipToRes(req, res, directory);
