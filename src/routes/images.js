@@ -1,12 +1,15 @@
 const express = require('express');
+
 const router = express.Router();
+
 const fs = require('fs');
 const path = require('path');
 const hound = require('hound');
+
 const watcher = hound.watch('./img/');
 const axios = require('axios');
-let images = require('../data/images');
 const multer = require('multer');
+const images = require('../data/images');
 
 // Folder 'on change' listeners.
 watcher.on('create', () => {
@@ -15,29 +18,29 @@ watcher.on('create', () => {
 watcher.on('delete', () => {
   folderOnChange();
 });
+
 // Do some actions if folder change.
 const folderOnChange = () => {
   fs.readdir('./img/', (err, items) => {
     // sort by date
     items = items.sort(
-      (a, b) =>
-        fs.statSync('./img/' + b).mtime.getTime() -
-        fs.statSync('./img/' + a).mtime.getTime(),
+      (a, b) => fs.statSync(`./img/${b}`).mtime.getTime()
+        - fs.statSync(`./img/${a}`).mtime.getTime(),
     );
-    let imagesEmpty = [];
+    const imagesEmpty = [];
     // if 0 img -> empty JSON
     if (items.length === 0) {
-      let data = JSON.stringify(imagesEmpty);
+      const data = JSON.stringify(imagesEmpty);
       fs.writeFileSync('./src/data/images.json', data);
     } else {
       for (let i = 0; i < items.length; i++) {
-        let image = {
+        const image = {
           _id: imagesEmpty.length,
           index: imagesEmpty.length,
-          picture: 'img/' + items[i],
+          picture: `img/${items[i]}`,
         };
         imagesEmpty.push(image);
-        let data = JSON.stringify(imagesEmpty);
+        const data = JSON.stringify(imagesEmpty);
         fs.writeFileSync('./src/data/images.json', data);
       }
     }
@@ -50,24 +53,24 @@ const storage = multer.diskStorage({
     cb(null, './img/');
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '.' + file.originalname);
+    cb(null, `${Date.now()}.${file.originalname}`);
   },
 });
 // Addition file filter by file type.
 const fileFilter = (req, file, cb) => {
   if (
-    file.mimetype === 'image/jpeg' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/png'
+    file.mimetype === 'image/jpeg'
+    || file.mimetype === 'image/jpg'
+    || file.mimetype === 'image/png'
   ) {
     cb(null, true);
   } else {
     cb(new Error('incorrect file format'), false);
   }
 };
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ storage, fileFilter });
 
-const deleteImageShapes = name => {
+const deleteImageShapes = (name) => {
   const images = JSON.parse(fs.readFileSync('./src/data/labeledImages.json'));
   const index = images.findIndex(obj => obj.image.name === name);
   if (index >= 0) {
@@ -85,9 +88,7 @@ const getBaseFolder = (url, baseUrl, headers) => {
     .get(`${baseUrl}/${folderId}`, {
       headers,
     })
-    .then(result => {
-      return result.data;
-    });
+    .then(result => result.data);
 };
 
 const downloadFile = (file, baseUrl, headers) => {
@@ -95,31 +96,27 @@ const downloadFile = (file, baseUrl, headers) => {
     return axios
       .get(`${baseUrl}?q=parents%20in%20'${file.id}'`, {
         headers,
-        //params: { q: `parents%20in%20'${file.id}'` },
       })
-      .then(result => {
-        return downloadFromFolder(result.data.files, baseUrl, headers);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  } else {
-    const imgPath = path.resolve('img', Date.now() + '.' + file.name);
-    const writer = fs.createWriteStream(imgPath);
-    return axios
-      .get(`${baseUrl}/${file.id}`, {
-        headers,
-        params: { alt: 'media' },
-        responseType: 'stream',
-      })
-      .then(res => {
-        res.data.pipe(writer);
-        return Promise.resolve();
-      })
-      .catch(error => {
+      .then(result => downloadFromFolder(result.data.files, baseUrl, headers))
+      .catch((error) => {
         console.log(error);
       });
   }
+  const imgPath = path.resolve('img', `${Date.now()}.${file.name}`);
+  const writer = fs.createWriteStream(imgPath);
+  return axios
+    .get(`${baseUrl}/${file.id}`, {
+      headers,
+      params: { alt: 'media' },
+      responseType: 'stream',
+    })
+    .then((res) => {
+      res.data.pipe(writer);
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const downloadFromFolder = async (files, baseUrl, headers) => {
@@ -127,14 +124,13 @@ const downloadFromFolder = async (files, baseUrl, headers) => {
     const file = files[i];
     await downloadFile(file, baseUrl, headers);
   }
-  return;
 };
 
 // @route GET api/images
 // @desc   get list of all images
 router.get('/', (req, res) => {
-  let imagesJSON = JSON.parse(
-    fs.readFileSync(__dirname + '/../data/images.json'),
+  const imagesJSON = JSON.parse(
+    fs.readFileSync(`${__dirname}/../data/images.json`),
   );
   res
     .status(200)
@@ -167,10 +163,10 @@ router.post('/gdrive', async (req, res) => {
 // @route DELETE api/images
 // @desc   delete image
 router.delete('/img/:imgName', (req, res) => {
-  let path = req.params.imgName;
-  if (fs.existsSync('./img/' + path)) {
+  const path = req.params.imgName;
+  if (fs.existsSync(`./img/${path}`)) {
     deleteImageShapes(path);
-    fs.unlinkSync('./img/' + path);
+    fs.unlinkSync(`./img/${path}`);
     res.status(200).send();
   } else {
     console.log('no file');
@@ -188,9 +184,9 @@ router.delete('/reset', (req, res) => {
   // delete images
   fs.readdir('./img/', (err, items) => {
     for (let i = 0; i < items.length; i++) {
-      if (fs.existsSync('./img/' + items[i])) {
+      if (fs.existsSync(`./img/${items[i]}`)) {
         deleteImageShapes(items[i]);
-        fs.unlinkSync('./img/' + items[i]);
+        fs.unlinkSync(`./img/${items[i]}`);
       } else {
         console.log('no file');
       }

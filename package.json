@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon  --inspect server.js"
+    "server": "nodemon  --inspect server.js",
+    "test-init": "node node_modules/jasmine/bin/jasmine.js init",
+    "test": "node node_modules/jasmine/bin/jasmine.js"
   },
   "nodemonConfig": {
     "ignore": [
@@ -33,6 +35,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
+    "jasmine": "^3.4.0",
     "nodemon": "^1.18.11"
   }
 }

@@ -26,4 +26,6 @@ app.use('/api/images/', images);
 app.use('/api/labeled/', labeledImages);
 app.use('/api/generator/', generator);
 
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+const server = app.listen(port, () => console.log(`Server up and running on port ${port} !`),);
+
+module.exports = server;

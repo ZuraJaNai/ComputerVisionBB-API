@@ -37,13 +37,13 @@ router.post('/', (req, res) => {
 // @route DELETE api/entities
 // @desc   delete entity
 router.delete('/:index', (req, res) => {
-  let newEntitesJSON = [];
-  let entitiesJSON = JSON.parse(
-    fs.readFileSync(__dirname + '/../data/entities.json'),
+  const newEntitesJSON = [];
+  const entitiesJSON = JSON.parse(
+    fs.readFileSync(`${__dirname}/../data/entities.json`),
   );
-  for (let i = 0; i < entitiesJSON.length; i++) {
-    if (entitiesJSON[i].index != req.params.index) {
-      let newEntity = {
+  for (let i = 0; i < entitiesJSON.length; i += 1) {
+    if (entitiesJSON[i].index !== parseInt(req.params.index, 10)) {
+      const newEntity = {
         index: newEntitesJSON.length,
         color: entitiesJSON[i].color,
         label: entitiesJSON[i].label,
@@ -51,7 +51,7 @@ router.delete('/:index', (req, res) => {
       newEntitesJSON.push(newEntity);
     }
   }
-  let data = JSON.stringify(newEntitesJSON);
+  const data = JSON.stringify(newEntitesJSON);
   fs.writeFileSync('./src/data/entities.json', data);
   res.status(200).json(data);
 });
