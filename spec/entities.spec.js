@@ -45,3 +45,19 @@ describe('DELETE request', () => {
     });
   });
 });
+
+describe('PUT request', () => {
+  it('entity modify', done => {
+    request(
+      {
+        url: entities_url,
+        method: 'PUT',
+        json: { index: 1, data: 'modified' },
+      },
+      (err, res, body) => {
+        expect(res.statusCode).toBe(200);
+        done();
+      },
+    );
+  });
+});
