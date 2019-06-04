@@ -1,1 +1,65 @@
-[{"index":0,"color":"#1d1fcf","label":"doge"},{"index":1,"color":"#133215","label":"snake"},{"index":2,"color":"white","label":"testLabel"},{"index":3,"color":"white","label":"testLabel"},{"index":4,"color":"white","label":"testLabel"}]
+[{
+  "index": 0,
+  "color": "#1d1fcf",
+  "label": "doge"
+}, {
+  "index": 1,
+  "color": "#133215",
+  "label": "snake"
+}, {
+  "index": 2,
+  "color": "#e01f1f",
+  "label": "tree"
+}, {
+  "index": 3,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 4,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 5,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 6,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 7,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 8,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 9,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 10,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 11,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 12,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 13,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 14,
+  "color": "white",
+  "label": "testLabel"
+}, {
+  "index": 15,
+  "color": "white",
+  "label": "testLabel"
+}]

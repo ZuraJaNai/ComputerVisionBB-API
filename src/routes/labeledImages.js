@@ -37,8 +37,9 @@ router.post('/', (req, res) => {
 
 // @route DELETE api/labeled
 // @desc  delete ALL images with shapes
-router.delete('/', () => {
+router.delete('/', (req, res) => {
   const data = [];
   fs.writeFileSync('./src/data/labeledImages.json', data);
+  res.status(200).end();
 });
 module.exports = router;

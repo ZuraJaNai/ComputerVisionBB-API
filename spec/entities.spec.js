@@ -1,32 +1,47 @@
 /* eslint-disable */
-var request = require('request');
-var entities_url = 'http://localhost:5000/api/entities';
+const request = require('request');
+const fs = require('fs');
+var entities = require('../src/data/entities.json');
+const entities_url = 'http://localhost:5000/api/entities';
 
 // GET
 describe('GET request', () => {
-  describe('GET /', () => {
-    it('returns status code 200', done => {
-      request.get(entities_url, (err, res, body) => {
-        expect(res.statusCode).toBe(200);
-        done();
-      });
+  it('returns status code 200', done => {
+    request.get(entities_url, (err, res, body) => {
+      expect(res.statusCode).toBe(200);
+      done();
+    });
+  });
+
+  it('returns corresponded data', done => {
+    request.get(entities_url, (err, res, body) => {
+      expect(
+        JSON.parse(fs.readFileSync(`${__dirname}/../src/data/entities.json`)),
+      ).toEqual(JSON.parse(body));
+      done();
     });
   });
 });
 
 // POST
 describe('POST request', () => {
-  describe('POST /', () => {
-    it('entity created', done => {
-      request.post(
-        entities_url,
-        { json: { color: 'white', label: 'testLabel' } },
-        (err, res, body) => {
-          body;
-          expect(res.statusCode).toBe(201);
-          done();
-        },
-      );
+  it('entity created', done => {
+    request.post(
+      entities_url,
+      { json: { color: 'white', label: 'testLabel' } },
+      (err, res, body) => {
+        expect(res.statusCode).toBe(201);
+        done();
+      },
+    );
+  });
+});
+
+describe('DELETE request', () => {
+  it('entity deletion', done => {
+    request.delete(`${entities_url}/0`, (err, res, body) => {
+      expect(res.statusCode).toBe(200);
+      done();
     });
   });
 });
