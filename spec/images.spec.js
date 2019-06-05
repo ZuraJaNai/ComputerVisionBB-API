@@ -19,3 +19,17 @@ describe('GET request', () => {
     });
   });
 });
+
+// DELETE
+describe('DELETE request', () => {
+  it('zall labeledImg deleted', done => {
+    const imageToDel = 'testImage.jpg';
+    request.delete(
+      `http://localhost:5000/api/images/img/${imageToDel}`,
+      (err, res, body) => {
+        expect(res.statusCode).toBe(200);
+        done();
+      },
+    );
+  });
+});
