@@ -59,7 +59,6 @@ router.delete('/:index', (req, res) => {
 // @route PUT api/entities
 // @desc   change entity
 router.put('/', (req, res) => {
-  console.log(req.body);
   const entitiesJSON = JSON.parse(
     fs.readFileSync(`${__dirname}/../data/entities.json`),
   );

@@ -21,6 +21,7 @@ describe('GET request', () => {
   });
 });
 
+// DELETE
 describe('DELETE request', () => {
   it('zall labeledImg deleted', done => {
     request.delete('http://localhost:5000/api/labeled/', (err, res, body) => {

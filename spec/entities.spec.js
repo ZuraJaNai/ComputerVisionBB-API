@@ -37,6 +37,7 @@ describe('POST request', () => {
   });
 });
 
+// DELETE
 describe('DELETE request', () => {
   it('entity deletion', done => {
     request.delete(`${entities_url}/0`, (err, res, body) => {
@@ -46,6 +47,7 @@ describe('DELETE request', () => {
   });
 });
 
+// PUT
 describe('PUT request', () => {
   it('entity modify', done => {
     request(
