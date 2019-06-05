@@ -2,7 +2,16 @@
   "image": {
     "name": "1558696407649.d.jpg"
   },
-  "shapes": []
+  "shapes": [{
+    "index": 0,
+    "label": "trees",
+    "color": "#e01f1f",
+    "x": 136,
+    "y": 71,
+    "width": 399,
+    "height": 263,
+    "name": "Figure0"
+  }]
 }, {
   "image": {
     "name": "1558696407626.a.jpg"

@@ -21,6 +21,37 @@ describe('GET request', () => {
   });
 });
 
+// POST
+describe('POST request', () => {
+  it('entity created', done => {
+    request.post(
+      'http://localhost:5000/api/labeled/',
+      {
+        json: {
+          image: {
+            name: '1558696407649.d.jpg',
+          },
+          shapes: [
+            {
+              index: 0,
+              label: 'treeTest',
+              color: '#e01f1f',
+              x: 136,
+              y: 71,
+              width: 399,
+              height: 263,
+              name: 'Figure0',
+            },
+          ],
+        },
+      },
+      (err, res, body) => {
+        expect(res.statusCode).toBe(201);
+        done();
+      },
+    );
+  });
+});
 // DELETE
 describe('DELETE request', () => {
   it('zall labeledImg deleted', done => {
